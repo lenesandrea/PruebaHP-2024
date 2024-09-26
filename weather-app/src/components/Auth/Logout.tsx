@@ -1,5 +1,5 @@
 import { useAuth } from '../../context/AuthContext';
-import { googleLogout } from 'react-oauth/google';
+import { googleLogout } from '@react-oauth/google';
 
 const Logout: React.FC = () => {
   const { logout } = useAuth();
