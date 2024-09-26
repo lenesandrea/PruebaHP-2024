@@ -1,5 +1,5 @@
 import React from 'react';
-import { googleLogout } from 'react-oauth/google';
+import { googleLogout } from '@react-oauth/google';
 
 const Header: React.FC = () => {
   const handleLogout = () => {

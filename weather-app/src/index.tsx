@@ -1,17 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import ReactDOM from 'react-dom/client';
 import App from './App';
-import { store } from './store';
-import { Provider } from 'react-redux';
+import { AuthProvider } from './context/AuthContext';
+import { GoogleOAuthProvider } from '@react-oauth/google'; 
 
-const clientId = "1036597589979-9o0avej3uk7itrij4e08v27e4hvdei25.apps.googleusercontent.com"; 
+const root = ReactDOM.createRoot(
+  document.getElementById('root') as HTMLElement
+);
 
-ReactDOM.render(
-  <GoogleOAuthProvider clientId={clientId}>
-     <Provider store={store}>
-      <App />
-    </Provider>
-  </GoogleOAuthProvider>,
-  document.getElementById('root')
+root.render(
+  <React.StrictMode>
+    {/* Proveedor de Google OAuth */}
+    <GoogleOAuthProvider clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID!}>
+      {/* Proveedor de autenticación */}
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </GoogleOAuthProvider>
+  </React.StrictMode>
 );

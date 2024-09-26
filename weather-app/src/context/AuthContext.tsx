@@ -1,20 +1,29 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
 
+// Definición de la interfaz User
 interface User {
   name: string;
   email: string;
   picture: string;
 }
 
+// Definición de las propiedades del contexto de autenticación
 interface AuthContextProps {
   user: User | null;
   login: (userData: User) => void;
   logout: () => void;
 }
 
+// Crear el contexto de autenticación
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider: React.FC = ({ children }) => {
+// Interfaz para las propiedades del proveedor de autenticación
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+// Proveedor de autenticación
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
   const login = (userData: User) => {
@@ -32,6 +41,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   );
 };
 
+// Exportar el contexto para que sea accesible en otros archivos
 export const useAuth = (): AuthContextProps => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -39,3 +49,6 @@ export const useAuth = (): AuthContextProps => {
   }
   return context;
 };
+
+// Exportar AuthContext si es necesario (opcional)
+export { AuthContext };
