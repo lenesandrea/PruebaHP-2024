@@ -5,7 +5,7 @@ import App from './App';
 import { store } from './store';
 import { Provider } from 'react-redux';
 
-const clientId = "1036597589979-9o0avej3uk7itrij4e08v27e4hvdei25.apps.googleusercontent.com"; // Sustituir con tu Client ID
+const clientId = "1036597589979-9o0avej3uk7itrij4e08v27e4hvdei25.apps.googleusercontent.com"; 
 
 ReactDOM.render(
   <GoogleOAuthProvider clientId={clientId}>
