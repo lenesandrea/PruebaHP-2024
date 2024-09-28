@@ -1,17 +1,19 @@
-import { GoogleLogin, googleLogout } from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
-import jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 const Login: React.FC = () => {
   const { login } = useAuth();
 
   const handleLoginSuccess = (credentialResponse: any) => {
-    const decoded = jwt_decode<any>(credentialResponse.credential); 
+    const decoded = jwtDecode(credentialResponse.credential) as any;
+    
+    // Call the login function with user info and the token
     login({
       name: decoded.name,
       email: decoded.email,
-      picture: decoded.picture,
-    });
+      picture: decoded.picture
+    }, credentialResponse.credential);
   };
 
   return (

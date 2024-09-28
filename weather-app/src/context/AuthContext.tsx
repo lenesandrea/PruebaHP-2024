@@ -1,4 +1,5 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode'; // Import to decode the JWT token
 
 // Definición de la interfaz User
 interface User {
@@ -10,7 +11,7 @@ interface User {
 // Definición de las propiedades del contexto de autenticación
 interface AuthContextProps {
   user: User | null;
-  login: (userData: User) => void;
+  login: (userData: User, token: string) => void;
   logout: () => void;
 }
 
@@ -26,11 +27,39 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  const login = (userData: User) => {
+  // Check local storage for existing user data and token when the app initializes
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user');
+    const storedToken = localStorage.getItem('token');
+
+    if (storedUser && storedToken) {
+      const decodedToken: any = jwtDecode(storedToken);
+
+      // Check if the token is still valid
+      if (decodedToken.exp * 1000 > Date.now()) {
+        setUser(JSON.parse(storedUser)); // Set the user if the token is valid
+      } else {
+        // If the token is expired, clear storage and logout
+        logout();
+      }
+    }
+  }, []);
+
+  const login = (userData: User, token: string) => {
+    // Store the token and user data in localStorage
+    localStorage.setItem('user', JSON.stringify(userData));
+    localStorage.setItem('token', token);
+
+    // Update state with the logged-in user
     setUser(userData);
   };
 
   const logout = () => {
+    // Clear user and token from local storage
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+
+    // Clear the user state
     setUser(null);
   };
 
