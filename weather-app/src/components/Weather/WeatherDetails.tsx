@@ -1,14 +1,44 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getCountryByCode } from '../../services/countryService';
 
-const WeatherDetails: React.FC<{ weather: any }> = ({ weather }) => {
-  const [countryDetails, setCountryDetails] = useState<any>(null);
+interface Weather {
+  name: string;
+  main: {
+    temp: number;
+    humidity: number;
+  };
+  sys: {
+    country: string;
+  };
+  weather: {
+    description: string;
+  }[];
+}
+
+interface CountryDetails {
+  name: {
+    common: string;
+  };
+  capital: string[];
+  population: number;
+  currencies: {
+    [key: string]: {
+      name: string;
+      symbol: string;
+    };
+  };
+}
+
+const WeatherDetails: React.FC<{ weather: Weather }> = ({ weather }) => {
+  const [countryDetails, setCountryDetails] = useState<CountryDetails | null>(null);
 
   useEffect(() => {
     const fetchCountryDetails = async () => {
-      const countryCode = weather.sys.country;
-      const data = await getCountryByCode(countryCode);
-      setCountryDetails(data);
+      if (weather && weather.sys.country) {
+        const countryCode = weather.sys.country;
+        const data = await getCountryByCode(countryCode);
+        setCountryDetails(data);
+      }
     };
 
     fetchCountryDetails();
@@ -25,7 +55,7 @@ const WeatherDetails: React.FC<{ weather: any }> = ({ weather }) => {
           <h3>{countryDetails.name.common}</h3>
           <p>Capital: {countryDetails.capital[0]}</p>
           <p>Población: {countryDetails.population}</p>
-          <p>Moneda: {Object.keys(countryDetails.currencies)[0]}</p>
+          <p>Moneda: {Object.values(countryDetails.currencies).map(currency => `${currency.name} (${currency.symbol})`).join(', ')}</p>
         </div>
       )}
     </div>

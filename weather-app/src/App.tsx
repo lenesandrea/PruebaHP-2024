@@ -1,8 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './components/Auth/Login';
-import WeatherSearch from './components/Weather/WeatherSearch';
-import { AuthProvider, useAuth } from './context/AuthContext';
+import WeatherDashboard from './components/Weather/WeatherDashboard';
+import { useAuth, AuthProvider } from './context/AuthContext';
+import GlobalStyles from './assets/styles/GlobalStyles';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
@@ -13,17 +14,17 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 };
 
 const App: React.FC = () => {
-  const { user } = useAuth();
   return (
     <AuthProvider>
       <Router>
+        <GlobalStyles />
         <Routes>
-          <Route path="/" element={user ? <Navigate to="/weather" /> : <Login />} />
+          <Route path="/" element={<Login />} />
           <Route
             path="/weather"
             element={
               <ProtectedRoute>
-                <WeatherSearch />
+                <WeatherDashboard />
               </ProtectedRoute>
             }
           />

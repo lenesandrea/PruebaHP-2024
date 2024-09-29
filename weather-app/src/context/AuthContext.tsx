@@ -61,6 +61,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     // Clear the user state
     setUser(null);
+
+    console.log("Usuario ha cerrado sesión.");
   };
 
   return (
