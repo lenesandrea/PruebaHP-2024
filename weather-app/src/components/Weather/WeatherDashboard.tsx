@@ -80,7 +80,6 @@ const HistoryDropdown = styled.select`
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #4b5563;
-  margin-right: 10px;
   background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#ffffff')};
 
 `;
@@ -167,8 +166,8 @@ const WeatherDashboard: React.FC = () => {
             <Title>Weather Dashboard</Title>
             <DasboardContentContainer>
                 <SearchBarContainer>
-                    <SearchIcon icon={faMagnifyingGlass} />
                     <SearchForm onSubmit={handleSearch}>
+                      <SearchIcon icon={faMagnifyingGlass} />
                         <input
                             type="text"
                             value={city}

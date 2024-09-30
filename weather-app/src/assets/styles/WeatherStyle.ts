@@ -77,17 +77,17 @@ export const ForecastTemp = styled.p`
 // Contenedor para la barra de búsqueda
 export const SearchBarContainer = styled.div`
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
-`;
-
-// Formulario de búsqueda
+  `;
+  
+  // Formulario de búsqueda
 export const SearchForm = styled.form`
   display: flex;
   justify-content: center;
+  position: relative;
 
   input {
     width: 300px;
