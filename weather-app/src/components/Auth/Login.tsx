@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
@@ -40,7 +40,7 @@ const Title = styled.h1`
 `;
 
 const Login: React.FC = () => {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const [isDarkTheme, setIsDarkTheme] = useState(false);
   const navigate = useNavigate(); // Instancia useNavigate
 
@@ -57,6 +57,13 @@ const Login: React.FC = () => {
   };
 
   const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
+
+  useEffect(() => {
+    if (user) {
+      navigate('/weather');
+    };
+  }, [user, navigate])
+  
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
