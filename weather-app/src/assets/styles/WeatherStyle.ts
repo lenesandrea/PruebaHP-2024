@@ -7,7 +7,7 @@ export const WeatherContainer = styled.div<{ isDarkMode: boolean }>`
   padding: 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
@@ -77,6 +77,7 @@ export const ForecastTemp = styled.p`
 // Contenedor para la barra de búsqueda
 export const SearchBarContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   gap: 10px;
@@ -87,12 +88,13 @@ export const SearchBarContainer = styled.div`
 export const SearchForm = styled.form`
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
 
   input {
     width: 300px;
     padding: 10px;
+    padding-left: 35px;
     border-radius: 8px;
+    font-size: 1rem;
     border: 1px solid #4b5563;
     margin-right: 10px;
     background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#ffffff')};
