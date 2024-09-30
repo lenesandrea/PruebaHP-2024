@@ -45,7 +45,6 @@ const useWeather = (city: string, apiKey: string) => {
         if (!response.ok) {
           throw new Error(data.message);
         }
-        const data = await response.json();
         setWeatherData({
           name: data.name,
           main: {
