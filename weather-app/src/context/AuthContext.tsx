@@ -58,6 +58,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Clear user and token from local storage
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+    localStorage.removeItem('searchHistory');
 
     // Clear the user state
     setUser(null);
