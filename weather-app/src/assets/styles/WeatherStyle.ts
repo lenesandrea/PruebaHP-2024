@@ -171,6 +171,25 @@ export const CountryDetails = styled.div`
   }
 `;
 
+// Detalles del país
+export const CountryDetailsContainer = styled.div`
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, ${({ theme }) => (theme.isDarkMode ? '0.1' : '0.3')});
+  width: 100%;
+  text-align: left;
+  color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
+
+  p {
+    margin: 5px 0;
+  }
+
+  h4 {
+    margin-bottom: 10px;
+  }
+`;
+
 // Información adicional
 export const AdditionalInfo = styled.div`
   margin-top: 20px;

@@ -22,6 +22,7 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import AlertBox from '../UI/AlertBox';
 import { useSearchHistory } from '../../hooks/useSearchHistory';
+import WeatherDetails from './WeatherDetails';
 
 type CountryData = {
   capital: string[];
@@ -112,8 +113,6 @@ const WeatherDashboard: React.FC = () => {
   const [searchCity, setSearchCity] = useState(''); // Remove initial value, set dynamically from location
   const { history, addCityToHistory } = useSearchHistory();
 
-  const [showCountryInfo, setShowCountryInfo] = useState(false);
-  const [countryData, setCountryData] = useState<CountryData | null>(null);
   const { user, logout } = useAuth();
   
 
@@ -144,9 +143,6 @@ const WeatherDashboard: React.FC = () => {
       if (cityName && !history.includes(cityName)) {
         addCityToHistory(cityName);
       }
-      fetch(`https://restcountries.com/v3.1/name/${weatherData.sys.country}`)
-        .then((response) => response.json())
-        .then((data) => setCountryData(data[0]));
     }
   }, [weatherData, history, addCityToHistory]);
 
@@ -159,10 +155,6 @@ const WeatherDashboard: React.FC = () => {
     const selectedCity = e.target.value;
     setCity(selectedCity);
     setSearchCity(selectedCity); // Trigger weather fetch with history city
-  };
-
-  const toggleCountryInfo = () => {
-    setShowCountryInfo(!showCountryInfo);
   };
 
   if (!user) {
@@ -214,60 +206,7 @@ const WeatherDashboard: React.FC = () => {
         {locationLoading && <p>Cargando ubicación...</p>}
         {weatherError && <AlertBox type="error" message={weatherError} />}
         {weatherLoading && <p>Cargando clima...</p>}
-
-        {weatherData && (
-          <WeatherContainer>
-            <CurrentWeather>
-              <WeatherInfo>
-                <h3>
-                  {weatherData.name},
-                  <span
-                    onClick={toggleCountryInfo}
-                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
-                  >
-                    {weatherData.sys.country}
-                  </span>
-                </h3>
-                <WeatherDescription>
-                  {weatherData.weather[0].description}
-                </WeatherDescription>
-                <p>Humedad: {weatherData.main.humidity}%</p>
-                <p>Viento: {weatherData.wind.speed} kph</p>
-                <p>Presión: {weatherData.main.pressure} hPa</p>
-              </WeatherInfo>
-              <WeatherInfoTemp>
-                <Temperature>{Math.round(weatherData.main.temp)}°C</Temperature>
-                <WeatherIcon
-                  src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
-                  alt="weather icon"
-                />
-              </WeatherInfoTemp>
-            </CurrentWeather>
-
-            {showCountryInfo && countryData && (
-              <CountryDetails>
-                <h4>Información del País:</h4>
-                <p>
-                  <strong>Capital:</strong> {countryData.capital[0]}
-                </p>
-                <p>
-                  <strong>Población:</strong> {countryData.population}
-                </p>
-                {countryData.currencies &&
-                  Object.keys(countryData.currencies).length > 0 && (
-                    <p>
-                      <strong>Moneda:</strong>
-                      {Object.values(countryData.currencies)[0]?.name} (
-                      {Object.values(countryData.currencies)[0]?.symbol})
-                    </p>
-                  )}
-                <p>
-                  <strong>Región:</strong> {countryData.region}
-                </p>
-              </CountryDetails>
-            )}
-          </WeatherContainer>
-        )}
+        <WeatherDetails weather={weatherData}/>
       </DasboardContentContainer>
     </DashboardContainer>
   );
