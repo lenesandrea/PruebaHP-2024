@@ -41,8 +41,9 @@ const useWeather = (city: string, apiKey: string) => {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
         );
+        const data = await response.json();
         if (!response.ok) {
-          throw new Error('Error fetching weather data');
+          throw new Error(data.message);
         }
         const data = await response.json();
         setWeatherData({
@@ -66,7 +67,7 @@ const useWeather = (city: string, apiKey: string) => {
           },
         });
       } catch (err: any) {
-        setError(`Weather API Error: ${err.message}`);
+        setError(`${err.message}`);
       } finally {
         setLoading(false);
       }
