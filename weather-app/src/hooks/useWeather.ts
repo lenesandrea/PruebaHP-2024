@@ -1,22 +1,24 @@
-// hooks/useWeather.ts
 import { useState, useEffect } from 'react';
 
-// Definición de la interfaz WeatherData
 interface WeatherData {
-  name: string; // Nombre de la ciudad
+  name: string;
   main: {
-    temp: number; // Temperatura
-    humidity: number; // Humedad
+    temp: number;
+    humidity: number;
+    pressure: number; 
   };
   sys: {
-    country: string; // Código del país
+    country: string;
   };
   weather: {
-    description: string; // Descripción del clima
+    description: string;
+    icon: string; 
   }[];
+  wind: {
+    speed: number; 
+  };
 }
 
-// Definición de la interfaz CountryData
 interface CountryData {
   capital: string;
   population: number;
@@ -30,32 +32,41 @@ const useWeather = (city: string, apiKey: string) => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!city) return; 
+    if (!city) return;
 
     const fetchWeather = async () => {
       setLoading(true);
-      setError(null); 
+      setError(null);
       try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
         if (!response.ok) {
           throw new Error('Error fetching weather data');
         }
         const data = await response.json();
         setWeatherData({
-          name: data.name, 
+          name: data.name,
           main: {
-            temp: data.main.temp, 
-            humidity: data.main.humidity, 
+            temp: data.main.temp,
+            humidity: data.main.humidity,
+            pressure: data.main.pressure, 
           },
           sys: {
             country: data.sys.country,
           },
-          weather: [{
-            description: data.weather[0].description, 
-          }],
+          weather: [
+            {
+              description: data.weather[0].description,
+              icon: data.weather[0].icon, 
+            },
+          ],
+          wind: {
+            speed: data.wind.speed, 
+          },
         });
       } catch (err: any) {
-        setError(`Weather API Error: ${err.message}`); 
+        setError(`Weather API Error: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -64,14 +75,15 @@ const useWeather = (city: string, apiKey: string) => {
     fetchWeather();
   }, [city, apiKey]);
 
-
   useEffect(() => {
-    if (!weatherData?.sys.country) return; 
+    if (!weatherData?.sys.country) return;
 
     const fetchCountryData = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`https://restcountries.com/v3.1/alpha/${weatherData.sys.country}`);
+        const response = await fetch(
+          `https://restcountries.com/v3.1/alpha/${weatherData.sys.country}`
+        );
         if (!response.ok) {
           throw new Error('Error fetching country data');
         }
@@ -79,13 +91,15 @@ const useWeather = (city: string, apiKey: string) => {
         setCountryData({
           capital: data[0].capital[0],
           population: data[0].population,
-          currencies: Object.values(data[0].currencies).map((currency: any) => ({
-            name: currency.name,
-            symbol: currency.symbol,
-          })),
+          currencies: Object.values(data[0].currencies).map(
+            (currency: any) => ({
+              name: currency.name,
+              symbol: currency.symbol,
+            })
+          ),
         });
       } catch (err: any) {
-        setError(`Country API Error: ${err.message}`); // Especificar el origen del error
+        setError(`Country API Error: ${err.message}`);
       } finally {
         setLoading(false);
       }

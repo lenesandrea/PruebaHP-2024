@@ -1,16 +1,25 @@
-// components/Weather/WeatherSearch.tsx
 import React, { useState, useEffect } from 'react';
-import useWeather from '../../hooks/useWeather'; 
+import useWeather from '../../hooks/useWeather';
 import { useAuth } from '../../context/AuthContext';
+import {
+  WeatherContainer,
+  CurrentWeather,
+  Temperature,
+  WeatherIcon,
+  WeatherInfo,
+  WeatherDescription,
+  SearchForm,
+  DashboardContainer,
+} from '../../assets/styles/WeatherStyle';
 
 const WeatherSearch: React.FC = () => {
   const [city, setCity] = useState('');
-  const [history, setHistory] = useState<string[]>([]); // Estado para el historial de búsquedas
+  const [history, setHistory] = useState<string[]>([]);
   const { user } = useAuth();
-  const apiKey = process.env.API_KEY_OPEN_WEATHER!;
-  const { weatherData, countryData, loading, error } = useWeather(city, apiKey);
+  const apiKey = '5a4b9e0a6e8cb9871258b1490fe8d354';
+  const { weatherData, loading, error } = useWeather(city, apiKey);
+  const [isDarkMode, setIsDarkMode] = useState(false); 
 
-  // Efecto para cargar el historial desde localStorage al inicio
   useEffect(() => {
     const savedHistory = localStorage.getItem('searchHistory');
     if (savedHistory) {
@@ -18,21 +27,21 @@ const WeatherSearch: React.FC = () => {
     }
   }, []);
 
-  // Manejar la búsqueda de una nueva ciudad
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Verifica si la ciudad ya está en el historial
     if (city && !history.includes(city)) {
-      const updatedHistory = [...history, city].slice(-5); // Mantiene solo las últimas 5 ciudades
+      const updatedHistory = [...history, city].slice(-5);
       setHistory(updatedHistory);
-      localStorage.setItem('searchHistory', JSON.stringify(updatedHistory)); // Guardar en localStorage
+      localStorage.setItem('searchHistory', JSON.stringify(updatedHistory));
     }
   };
 
-  // Manejar la búsqueda de una ciudad desde el historial
   const handleHistoryClick = (city: string) => {
-    setCity(city); // Establece la ciudad seleccionada
+    setCity(city);
+  };
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
   };
 
   if (!user) {
@@ -40,43 +49,48 @@ const WeatherSearch: React.FC = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSearch}>
-        <input 
-          type="text" 
-          value={city} 
-          onChange={(e) => setCity(e.target.value)} 
-          placeholder="Ingrese una ciudad" 
-          required 
+    <DashboardContainer isDarkMode={isDarkMode}>
+      <h2>React Weather</h2>
+      <button onClick={toggleDarkMode}>
+        Cambiar a {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
+      </button>
+
+      <SearchForm onSubmit={handleSearch}>
+        <input
+          type="text"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          placeholder="Ingrese una ciudad"
+          required
         />
         <button type="submit">Buscar</button>
-      </form>
+      </SearchForm>
 
       {loading && <p>Cargando...</p>}
       {error && <p>Error: {error}</p>}
 
       {weatherData && (
-        <div>
-          <h3>{weatherData.name}</h3> {/* Cambiado de cityName a name */}
-          <p>Temperatura: {weatherData.main.temp} °C</p> {/* Cambiado de temperature a main.temp */}
-          <p>Humedad: {weatherData.main.humidity}%</p> {/* Cambiado de humidity a main.humidity */}
-          <p>Descripción: {weatherData.weather[0].description}</p> {/* Cambiado de description a weather[0].description */}
-          <p>País: {weatherData.sys.country}</p> {/* Cambiado de countryCode a sys.country */}
-        </div>
+        <WeatherContainer isDarkMode={isDarkMode}>
+          <CurrentWeather isDarkMode={isDarkMode}>
+            <WeatherInfo>
+              <h3>{weatherData.name}</h3>
+              <WeatherDescription>{weatherData.weather[0]?.description}</WeatherDescription>
+              <p>Humedad: {weatherData.main.humidity}%</p>
+              <p>Viento: {weatherData.wind.speed} kph</p>
+              <p>Presión: {weatherData.main.pressure} hPa</p>
+            </WeatherInfo>
+            <div>
+              <Temperature>{Math.round(weatherData.main.temp)}°C</Temperature>
+              <WeatherIcon
+                src={`http://openweathermap.org/img/wn/${weatherData.weather[0]?.icon}@2x.png`}
+                alt="weather icon"
+              />
+            </div>
+          </CurrentWeather>
+
+        </WeatherContainer>
       )}
 
-      {countryData && (
-        <div>
-          <h3>Detalles del País</h3>
-          <p>Capital: {countryData.capital}</p>
-          <p>Población: {countryData.population}</p>
-          <p>Moneda: {countryData.currencies.map((currency, index) => (
-            <span key={index}>{currency.name} ({currency.symbol})</span>
-          ))}</p>
-        </div>
-      )}
-
-      {/* Mostrar el historial de búsquedas */}
       <div>
         <h4>Historial de Búsquedas</h4>
         <ul>
@@ -87,7 +101,7 @@ const WeatherSearch: React.FC = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </DashboardContainer>
   );
 };
 

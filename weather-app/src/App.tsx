@@ -4,6 +4,7 @@ import Login from './components/Auth/Login';
 import WeatherDashboard from './components/Weather/WeatherDashboard';
 import { useAuth, AuthProvider } from './context/AuthContext';
 import GlobalStyles from './assets/styles/GlobalStyles';
+import { ThemeContextProvider } from './context/ThemeContext'; 
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user } = useAuth();
@@ -16,20 +17,22 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 const App: React.FC = () => {
   return (
     <AuthProvider>
-      <Router>
-        <GlobalStyles />
-        <Routes>
-          <Route path="/" element={<Login />} />
-          <Route
-            path="/weather"
-            element={
-              <ProtectedRoute>
-                <WeatherDashboard />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </Router>
+      <ThemeContextProvider>  
+        <Router>
+          <GlobalStyles />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route
+              path="/weather"
+              element={
+                <ProtectedRoute>
+                  <WeatherDashboard />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </Router>
+      </ThemeContextProvider>
     </AuthProvider>
   );
 };

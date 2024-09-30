@@ -1,20 +1,34 @@
-// context/ThemeContext.tsx
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, ReactNode } from 'react';
+import { ThemeProvider } from 'styled-components';
+import lightThemeImage from './../assets/images/Día.png';
+import darkThemeImage from './../assets/images/noche.png';
+
+const lightTheme = {
+  background: '#f0f0f0',
+  color: '#333',
+  backgroundImage: lightThemeImage, 
+};
+
+const darkTheme = {
+  background: '#282c34',
+  color: '#f0f0f0',
+  backgroundImage: darkThemeImage,
+};
 
 const ThemeContext = createContext<any>(null);
 
-export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+export const useTheme = () => useContext(ThemeContext);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
-  };
-
+export const ThemeContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  
+  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
+  
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
+    <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
+      <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
+        {children}
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 };
-
-export const useTheme = () => useContext(ThemeContext);

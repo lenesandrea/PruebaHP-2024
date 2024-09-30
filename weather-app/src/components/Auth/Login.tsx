@@ -3,6 +3,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../context/AuthContext';
 import { jwtDecode } from 'jwt-decode';
 import styled, { ThemeProvider } from 'styled-components';
+import { useNavigate } from 'react-router-dom'; 
 import ThemeToggleButton from './../UI/ThemeToggleButton';
 import lightThemeImage from '../../assets/images/Día.png';
 import darkThemeImage from '../../assets/images/noche.png';
@@ -10,13 +11,13 @@ import darkThemeImage from '../../assets/images/noche.png';
 const lightTheme = {
   background: '#f0f0f0',
   color: '#333',
-  backgroundImage: lightThemeImage, // Ruta para la imagen clara
+  backgroundImage: lightThemeImage, 
 };
 
 const darkTheme = {
   background: '#282c34',
   color: '#f0f0f0',
-  backgroundImage: darkThemeImage, // Ruta para la imagen oscura
+  backgroundImage: darkThemeImage, 
 };
 
 const Container = styled.div<{ theme: any }>`
@@ -26,23 +27,22 @@ const Container = styled.div<{ theme: any }>`
   justify-content: center;
   height: 100vh; /* Altura completa de la ventana */
   width: 100vw; /* Ancho completo de la ventana */
-  background-color: ${({ theme }) => theme.background};
-  background-image: url(${({ theme }) => theme.backgroundImage}); /* Cambiar la imagen de fondo según el tema */
-  background-size: cover;
-  background-position: center;
   color: ${({ theme }) => theme.color};
   transition: all 0.3s ease;
+  position: relative; /* Para el posicionamiento del fondo */
   overflow: hidden; /* Evitar el desbordamiento */
 `;
 
 const Title = styled.h1`
   font-size: 3rem;
   margin-bottom: 2rem;
+  text-align: center; /* Centrar el texto */
 `;
 
 const Login: React.FC = () => {
   const { login } = useAuth();
   const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const navigate = useNavigate(); // Instancia useNavigate
 
   const handleLoginSuccess = (credentialResponse: any) => {
     const decoded = jwtDecode(credentialResponse.credential) as any;
@@ -52,13 +52,15 @@ const Login: React.FC = () => {
       email: decoded.email,
       picture: decoded.picture,
     }, credentialResponse.credential);
+
+    navigate('/weather');
   };
 
   const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
 
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
-      <Container>
+      <Container theme={isDarkTheme ? darkTheme : lightTheme}>
         <ThemeToggleButton isDarkTheme={isDarkTheme} toggleTheme={toggleTheme} />
         <Title>Weather App</Title>
         <GoogleLogin
