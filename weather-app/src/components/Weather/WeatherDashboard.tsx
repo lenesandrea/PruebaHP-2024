@@ -80,7 +80,7 @@ const WeatherDashboard: React.FC = () => {
     const [countryData, setCountryData] = useState<CountryData | null>(null); 
     const { user, logout } = useAuth(); 
     const { isDarkTheme, toggleTheme } = useTheme();
-    const apiKey = '5a4b9e0a6e8cb9871258b1490fe8d354';
+    const apiKey = process.env.API_KEY_OPEN_WEATHER!;
     const { weatherData, loading, error } = useWeather(city, apiKey);
 
     useEffect(() => {

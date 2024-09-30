@@ -16,7 +16,7 @@ const WeatherSearch: React.FC = () => {
   const [city, setCity] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const { user } = useAuth();
-  const apiKey = '5a4b9e0a6e8cb9871258b1490fe8d354';
+  const apiKey = process.env.API_KEY_OPEN_WEATHER!;
   const { weatherData, loading, error } = useWeather(city, apiKey);
   const [isDarkMode, setIsDarkMode] = useState(false); 
 
