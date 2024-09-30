@@ -7,12 +7,14 @@ const lightTheme = {
   background: '#f0f0f0',
   color: '#333',
   backgroundImage: lightThemeImage, 
+  isDarkMode: false
 };
 
 const darkTheme = {
   background: '#282c34',
   color: '#f0f0f0',
   backgroundImage: darkThemeImage,
+  isDarkMode: true
 };
 
 const ThemeContext = createContext<any>(null);

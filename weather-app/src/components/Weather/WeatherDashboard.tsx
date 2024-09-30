@@ -74,13 +74,14 @@ const PowerButton = styled.button`
   }
 `;
 
-const HistoryDropdown = styled.select`
+const HistoryDropdown = styled.select<{ isDarkMode: boolean }>`
   padding: 5px;
   font-size: 1rem;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #4b5563;
-  background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#ffffff')};
+  background-color: ${({ isDarkMode }) => (isDarkMode ? '#2d3748' : '#ffffff')};
+  color: ${({ isDarkMode }) => (!isDarkMode ? '#2d3748' : '#ffffff')};
 
 `;
 
@@ -179,7 +180,7 @@ const WeatherDashboard: React.FC = () => {
                     </SearchForm>
 
                     {history.length > 0 && (
-                        <HistoryDropdown value={searchCity} onChange={handleHistoryClick}>
+                        <HistoryDropdown value={searchCity} onChange={handleHistoryClick} isDarkMode={isDarkTheme}>
                             <option value="" disabled>Historial</option>
                             {history.map((historyCity, index) => (
                                 <option key={index} value={historyCity}>{historyCity}</option>

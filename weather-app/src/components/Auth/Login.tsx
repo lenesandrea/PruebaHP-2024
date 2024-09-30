@@ -28,6 +28,7 @@ const Container = styled.div<{ theme: any }>`
   height: 100vh; /* Altura completa de la ventana */
   width: 100vw; /* Ancho completo de la ventana */
   color: ${({ theme }) => theme.color};
+  background-image: url(${({ theme }) => theme.backgroundImage});
   transition: all 0.3s ease;
   position: relative; /* Para el posicionamiento del fondo */
   overflow: hidden; /* Evitar el desbordamiento */

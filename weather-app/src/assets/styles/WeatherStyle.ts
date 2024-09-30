@@ -106,6 +106,7 @@ export const SearchForm = styled.form`
   }
 
   button {
+    font-size: 1rem;
     padding: 10px 20px;
     background-color: #3b82f6;
     color: white;
