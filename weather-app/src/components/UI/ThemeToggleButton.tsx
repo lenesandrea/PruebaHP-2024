@@ -1,4 +1,3 @@
-// components/ThemeToggleButton.tsx
 import { useTheme } from '../../context/ThemeContext';
 import React from 'react';
 import styled from 'styled-components';
@@ -14,10 +13,10 @@ const ToggleContainer = styled.div`
   padding: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: fixed;  // Posición fija
-  top: 20px;        // Desde la parte superior
-  right: 20px;      // Desde la parte derecha
-  z-index: 1000;    // Asegurarte de que esté por encima de otros elementos
+  position: fixed;  
+  top: 20px;        
+  right: 20px;      
+  z-index: 1000;    
 `;
 
 const ToggleCircle = styled.div`

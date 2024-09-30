@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-// Contenedor principal para el clima
 export const WeatherContainer = styled.div`
   background-color: ${({ theme }) => (theme.isDarkMode ? '#1f2937' : '#ffffff')};
   color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
@@ -12,7 +11,6 @@ export const WeatherContainer = styled.div`
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
-// Contenedor para el clima actual
 export const CurrentWeather = styled.div`
   background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#e0e0e0')};
   padding: 20px;
@@ -27,7 +25,6 @@ export const CurrentWeather = styled.div`
   }
 `;
 
-// Estilo para la temperatura
 export const Temperature = styled.h2`
   font-size: 3rem;
   line-height: 3rem;
@@ -35,13 +32,11 @@ export const Temperature = styled.h2`
   margin-bottom: 0;
 `;
 
-// Estilo para el ícono del clima
 export const WeatherIcon = styled.img`
   width: 80px;
   height: 80px;
 `;
 
-// Contenedor para la información del clima
 export const WeatherInfo = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,31 +51,26 @@ export const WeatherInfoTemp = styled.div`
   }
 `;
 
-// Descripción del clima
 export const WeatherDescription = styled.p`
   font-size: 18px;
   color: #9ca3af;
 `;
 
 
-// Elemento individual de la previsión
 export const ForecastItem = styled.div`
   text-align: center;
 `;
 
-// Estilo para el día en la previsión
 export const Day = styled.p`
   font-size: 14px;
   color: #9ca3af;
 `;
 
-// Estilo para la temperatura en la previsión
 export const ForecastTemp = styled.p`
   font-size: 18px;
   font-weight: bold;
 `;
 
-// Contenedor para la barra de búsqueda
 export const SearchBarContainer = styled.div`
   display: flex;
   align-items: center;
@@ -94,7 +84,6 @@ export const SearchBarContainer = styled.div`
 
   `;
   
-  // Formulario de búsqueda
 export const SearchForm = styled.form`
   display: flex;
   justify-content: center;
@@ -136,14 +125,12 @@ export const SearchForm = styled.form`
   }
 `;
 
-// Contenedor del dashboard
 export const DashboardContainer = styled.div`
   display: flex;
   height: 100vh;
   background-color: ${({ theme }) => (theme.isDarkMode ? '#1f2937' : '#e0f7fa')};
 `;
 
-// Contenedor para el contenido del clima
 export const WeatherContent = styled.div`
   flex: 1;
   padding: 20px;
@@ -152,7 +139,6 @@ export const WeatherContent = styled.div`
   overflow-y: auto;
 `;
 
-// Detalles del país
 export const CountryDetails = styled.div`
   margin-top: 20px;
   padding: 15px;
@@ -171,7 +157,6 @@ export const CountryDetails = styled.div`
   }
 `;
 
-// Detalles del país
 export const CountryDetailsContainer = styled.div`
   margin-top: 20px;
   padding: 15px;
@@ -190,7 +175,6 @@ export const CountryDetailsContainer = styled.div`
   }
 `;
 
-// Información adicional
 export const AdditionalInfo = styled.div`
   margin-top: 20px;
   padding: 15px;

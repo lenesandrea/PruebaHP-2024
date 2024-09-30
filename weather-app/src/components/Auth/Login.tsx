@@ -44,7 +44,7 @@ const Title = styled.h1`
 const Login: React.FC = () => {
   const { login, user } = useAuth();
   const { isDarkTheme } = useTheme();
-  const navigate = useNavigate(); // Instancia useNavigate
+  const navigate = useNavigate(); 
 
   const handleLoginSuccess = (credentialResponse: any) => {
     const decoded = jwtDecode(credentialResponse.credential) as any;

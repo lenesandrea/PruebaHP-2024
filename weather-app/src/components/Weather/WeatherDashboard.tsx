@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import useWeather from '../../hooks/useWeather';
-import useCurrentLocation from '../../hooks/useCurrentLocation'; // Import the custom hook
+import useCurrentLocation from '../../hooks/useCurrentLocation'; 
 import { useAuth } from '../../context/AuthContext';
 import { useTheme } from '../../context/ThemeContext';
 import {
@@ -110,13 +110,12 @@ const SearchIcon = styled(FontAwesomeIcon)`
 
 const WeatherDashboard: React.FC = () => {
   const [city, setCity] = useState('');
-  const [searchCity, setSearchCity] = useState(''); // Remove initial value, set dynamically from location
+  const [searchCity, setSearchCity] = useState('');
   const { history, addCityToHistory } = useSearchHistory();
 
   const { user, logout } = useAuth();
   
 
-  // Use the custom hook to get the current city
   const {
     city: currentCity,
     loading: locationLoading,
@@ -129,11 +128,10 @@ const WeatherDashboard: React.FC = () => {
     error: weatherError,
   } = useWeather((searchCity || currentCity)!);
 
-  // Once the current city is fetched, trigger the weather search
   useEffect(() => {
     if (currentCity) {
       setCity(currentCity);
-      setSearchCity(currentCity); // Automatically set the search city
+      setSearchCity(currentCity); 
     }
   }, [currentCity]);
 
@@ -148,13 +146,13 @@ const WeatherDashboard: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    setSearchCity(city); // Trigger weather fetch with input city
+    setSearchCity(city); 
   };
 
   const handleHistoryClick = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedCity = e.target.value;
     setCity(selectedCity);
-    setSearchCity(selectedCity); // Trigger weather fetch with history city
+    setSearchCity(selectedCity); 
   };
 
   if (!user) {
