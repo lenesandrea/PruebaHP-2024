@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import ThemeToggleButton from './../UI/ThemeToggleButton';
 import lightThemeImage from '../../assets/images/Día.png';
 import darkThemeImage from '../../assets/images/noche.png';
+import { useTheme } from '../../context/ThemeContext';
 
 const lightTheme = {
   background: '#f0f0f0',
@@ -42,7 +43,7 @@ const Title = styled.h1`
 
 const Login: React.FC = () => {
   const { login, user } = useAuth();
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
+  const { isDarkTheme } = useTheme();
   const navigate = useNavigate(); // Instancia useNavigate
 
   const handleLoginSuccess = (credentialResponse: any) => {
@@ -57,8 +58,6 @@ const Login: React.FC = () => {
     navigate('/weather');
   };
 
-  const toggleTheme = () => setIsDarkTheme(!isDarkTheme);
-
   useEffect(() => {
     if (user) {
       navigate('/weather');
@@ -69,7 +68,7 @@ const Login: React.FC = () => {
   return (
     <ThemeProvider theme={isDarkTheme ? darkTheme : lightTheme}>
       <Container theme={isDarkTheme ? darkTheme : lightTheme}>
-        <ThemeToggleButton isDarkTheme={isDarkTheme} toggleTheme={toggleTheme} />
+        <ThemeToggleButton />
         <Title>Weather App</Title>
         <GoogleLogin
           onSuccess={handleLoginSuccess}

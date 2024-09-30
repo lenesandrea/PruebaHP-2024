@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 
 // Custom hook to fetch the current location (city) based on the user's geolocation
-const useCurrentLocation = (apiKey: string) => {
+const apiKey = process.env.REACT_APP_API_KEY_OPEN_WEATHER!;
+
+const useCurrentLocation = () => {
   const [city, setCity] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -11,7 +13,7 @@ const useCurrentLocation = (apiKey: string) => {
     const fetchCityFromCoordinates = async (latitude: number, longitude: number) => {
       try {
         const response = await fetch(
-          `http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=5a4b9e0a6e8cb9871258b1490fe8d354`
+          `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${apiKey}`
         );
         const data = await response.json();
         if (data && data.length > 0) {

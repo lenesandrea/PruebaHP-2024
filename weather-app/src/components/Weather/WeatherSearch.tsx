@@ -16,8 +16,7 @@ const WeatherSearch: React.FC = () => {
   const [city, setCity] = useState('');
   const [history, setHistory] = useState<string[]>([]);
   const { user } = useAuth();
-  const apiKey = process.env.API_KEY_OPEN_WEATHER!;
-  const { weatherData, loading, error } = useWeather(city, apiKey);
+  const { weatherData, loading, error } = useWeather(city);
   const [isDarkMode, setIsDarkMode] = useState(false); 
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const WeatherSearch: React.FC = () => {
   }
 
   return (
-    <DashboardContainer isDarkMode={isDarkMode}>
+    <DashboardContainer>
       <h2>React Weather</h2>
       <button onClick={toggleDarkMode}>
         Cambiar a {isDarkMode ? 'Modo Claro' : 'Modo Oscuro'}
@@ -70,8 +69,8 @@ const WeatherSearch: React.FC = () => {
       {error && <p>Error: {error}</p>}
 
       {weatherData && (
-        <WeatherContainer isDarkMode={isDarkMode}>
-          <CurrentWeather isDarkMode={isDarkMode}>
+        <WeatherContainer>
+          <CurrentWeather>
             <WeatherInfo>
               <h3>{weatherData.name}</h3>
               <WeatherDescription>{weatherData.weather[0]?.description}</WeatherDescription>

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 // Contenedor principal para el clima
-export const WeatherContainer = styled.div<{ isDarkMode: boolean }>`
-  background-color: ${({ isDarkMode }) => (isDarkMode ? '#1f2937' : '#ffffff')};
-  color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+export const WeatherContainer = styled.div`
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#1f2937' : '#ffffff')};
+  color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
   padding: 20px;
   border-radius: 8px;
   width: 100%;
@@ -13,8 +13,8 @@ export const WeatherContainer = styled.div<{ isDarkMode: boolean }>`
 `;
 
 // Contenedor para el clima actual
-export const CurrentWeather = styled.div<{ isDarkMode: boolean }>`
-  background-color: ${({ isDarkMode }) => (isDarkMode ? '#2d3748' : '#e0e0e0')};
+export const CurrentWeather = styled.div`
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#e0e0e0')};
   padding: 20px;
   border-radius: 8px;
   display: flex;
@@ -62,15 +62,6 @@ export const WeatherDescription = styled.p`
   color: #9ca3af;
 `;
 
-// Contenedor para la previsión del clima
-export const ForecastContainer = styled.div<{ isDarkMode: boolean }>`
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  background-color: ${({ isDarkMode }) => (isDarkMode ? '#2d3748' : '#f0f0f0')};
-  border-radius: 8px;
-  padding: 20px;
-`;
 
 // Elemento individual de la previsión
 export const ForecastItem = styled.div`
@@ -146,30 +137,30 @@ export const SearchForm = styled.form`
 `;
 
 // Contenedor del dashboard
-export const DashboardContainer = styled.div<{ isDarkMode: boolean }>`
+export const DashboardContainer = styled.div`
   display: flex;
   height: 100vh;
-  background-color: ${({ isDarkMode }) => (isDarkMode ? '#1f2937' : '#e0f7fa')};
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#1f2937' : '#e0f7fa')};
 `;
 
 // Contenedor para el contenido del clima
-export const WeatherContent = styled.div<{ isDarkMode: boolean }>`
+export const WeatherContent = styled.div`
   flex: 1;
   padding: 20px;
-  background-color: ${({ isDarkMode }) => (isDarkMode ? '#2d3748' : '#ffffff')};
-  color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#2d3748' : '#ffffff')};
+  color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
   overflow-y: auto;
 `;
 
 // Detalles del país
-export const CountryDetails = styled.div<{ isDarkMode: boolean }>`
+export const CountryDetails = styled.div`
   margin-top: 20px;
   padding: 15px;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, ${({ isDarkMode }) => (isDarkMode ? '0.1' : '0.3')});
+  background-color: rgba(255, 255, 255, ${({ theme }) => (theme.isDarkMode ? '0.1' : '0.3')});
   width: 100%;
   text-align: left;
-  color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+  color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
 
   p {
     margin: 5px 0;
@@ -181,12 +172,12 @@ export const CountryDetails = styled.div<{ isDarkMode: boolean }>`
 `;
 
 // Información adicional
-export const AdditionalInfo = styled.div<{ isDarkMode: boolean }>`
+export const AdditionalInfo = styled.div`
   margin-top: 20px;
   padding: 15px;
-  background-color: rgba(255, 255, 255, ${({ isDarkMode }) => (isDarkMode ? '0.1' : '0.3')});
+  background-color: rgba(255, 255, 255, ${({ theme }) => (theme.isDarkMode ? '0.1' : '0.3')});
   border-radius: 10px;
-  color: ${({ isDarkMode }) => (isDarkMode ? 'white' : 'black')};
+  color: ${({ theme }) => (theme.isDarkMode ? 'white' : 'black')};
   text-align: left;
 
   p {

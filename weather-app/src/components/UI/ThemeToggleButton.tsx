@@ -1,11 +1,8 @@
 // components/ThemeToggleButton.tsx
+import { useTheme } from '../../context/ThemeContext';
 import React from 'react';
 import styled from 'styled-components';
 
-interface ToggleButtonProps {
-  isDarkTheme: boolean;
-  toggleTheme: () => void;
-}
 
 const ToggleContainer = styled.div`
   width: 60px;
@@ -49,7 +46,8 @@ const SunIcon = styled.div`
   color: white;
 `;
 
-const ThemeToggleButton: React.FC<ToggleButtonProps> = ({ isDarkTheme, toggleTheme }) => {
+const ThemeToggleButton: React.FC = () => {
+  const { isDarkTheme, toggleTheme } = useTheme();
   return (
     <ToggleContainer onClick={toggleTheme}>
       <ToggleCircle>

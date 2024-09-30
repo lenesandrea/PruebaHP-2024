@@ -25,7 +25,9 @@ interface CountryData {
   currencies: { name: string; symbol: string }[];
 }
 
-const useWeather = (city: string, apiKey: string) => {
+const apiKey = process.env.REACT_APP_API_KEY_OPEN_WEATHER!;
+
+const useWeather = (city: string) => {
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
   const [countryData, setCountryData] = useState<CountryData | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
