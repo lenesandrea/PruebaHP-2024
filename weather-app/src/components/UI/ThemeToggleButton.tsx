@@ -7,10 +7,10 @@ interface ToggleButtonProps {
   toggleTheme: () => void;
 }
 
-const ToggleContainer = styled.div<{ isDark: boolean }>`
+const ToggleContainer = styled.div`
   width: 60px;
   height: 30px;
-  background-color: ${({ isDark }) => (isDark ? '#87CEEB' : '#FFA500')};
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#87CEEB' : '#FFA500')};
   border-radius: 30px;
   display: flex;
   align-items: center;
@@ -23,13 +23,13 @@ const ToggleContainer = styled.div<{ isDark: boolean }>`
   z-index: 1000;    // Asegurarte de que esté por encima de otros elementos
 `;
 
-const ToggleCircle = styled.div<{ isDark: boolean }>`
+const ToggleCircle = styled.div`
   width: 20px;
   height: 20px;
-  background-color: ${({ isDark }) => (isDark ? '#fff' : '#FFD700')};
+  background-color: ${({ theme }) => (theme.isDarkMode ? '#fff' : '#FFD700')};
   border-radius: 50%;
   position: relative;
-  left: ${({ isDark }) => (isDark ? '30px' : '0')};
+  left: ${({ theme }) => (theme.isDarkMode ? '30px' : '0')};
   transition: left 0.3s ease;
 `;
 
@@ -51,8 +51,8 @@ const SunIcon = styled.div`
 
 const ThemeToggleButton: React.FC<ToggleButtonProps> = ({ isDarkTheme, toggleTheme }) => {
   return (
-    <ToggleContainer isDark={isDarkTheme} onClick={toggleTheme}>
-      <ToggleCircle isDark={isDarkTheme}>
+    <ToggleContainer onClick={toggleTheme}>
+      <ToggleCircle>
         {isDarkTheme ? <CloudIcon>☁️ </CloudIcon> : <SunIcon>🌞</SunIcon>}
       </ToggleCircle>
     </ToggleContainer>

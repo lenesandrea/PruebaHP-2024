@@ -13,6 +13,7 @@ import {
     CountryDetails,
     SearchForm,
     SearchBarContainer,
+    WeatherInfoTemp,
 } from '../../assets/styles/WeatherStyle';
 import ThemeToggleButton from '../UI/ThemeToggleButton';
 import styled from 'styled-components';
@@ -83,12 +84,19 @@ const HistoryDropdown = styled.select<{ isDarkMode: boolean }>`
   background-color: ${({ isDarkMode }) => (isDarkMode ? '#2d3748' : '#ffffff')};
   color: ${({ isDarkMode }) => (!isDarkMode ? '#2d3748' : '#ffffff')};
 
+//   @media (max-width: 600px) {
+//     align-self: flex-start;
+//   }
+
 `;
 
 const Title = styled.h1`
   font-size: 2.5rem;
   margin-bottom: 30px;
   color: ${({ theme }) => theme.color};
+  @media (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 const SearchIcon = styled(FontAwesomeIcon)`
@@ -208,13 +216,13 @@ const WeatherDashboard: React.FC = () => {
                                 <p>Viento: {weatherData.wind.speed} kph</p>
                                 <p>Presión: {weatherData.main.pressure} hPa</p>
                             </WeatherInfo>
-                            <div>
+                            <WeatherInfoTemp>
                                 <Temperature>{Math.round(weatherData.main.temp)}°C</Temperature>
                                 <WeatherIcon
                                     src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
                                     alt="weather icon"
                                 />
-                            </div>
+                            </WeatherInfoTemp>
                         </CurrentWeather>
 
                         {showCountryInfo && countryData && (

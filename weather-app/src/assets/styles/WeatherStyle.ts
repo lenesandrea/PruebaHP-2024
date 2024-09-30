@@ -20,12 +20,19 @@ export const CurrentWeather = styled.div<{ isDarkMode: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 // Estilo para la temperatura
 export const Temperature = styled.h2`
-  font-size: 72px;
+  font-size: 3rem;
+  line-height: 3rem;
   font-weight: bold;
+  margin-bottom: 0;
 `;
 
 // Estilo para el ícono del clima
@@ -39,6 +46,14 @@ export const WeatherInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+`;
+
+export const WeatherInfoTemp = styled.div`
+  margin-top: 20px;
+  text-align: center;
+  @media (max-width: 600px) {
+      width: 100%;
+  }
 `;
 
 // Descripción del clima
@@ -81,6 +96,11 @@ export const SearchBarContainer = styled.div`
   justify-content: center;
   gap: 10px;
   margin-bottom: 20px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: unset;
+  }
+
   `;
   
   // Formulario de búsqueda
@@ -90,7 +110,7 @@ export const SearchForm = styled.form`
   position: relative;
 
   input {
-    width: 300px;
+    min-width: 250px;
     padding: 10px;
     padding-left: 35px;
     border-radius: 8px;
@@ -118,6 +138,10 @@ export const SearchForm = styled.form`
     &:hover {
       background-color: #2563eb;
     }
+  }
+  
+  @media (max-width: 600px) {
+    justify-content: space-between;
   }
 `;
 
